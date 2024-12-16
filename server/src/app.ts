@@ -21,8 +21,8 @@ app.use(morganMiddleware)
 import userRouter from './routes/userRouter'
 
 app.use('/api/v1/user',userRouter)
-app.use('/api/v1/')
 
 app.use(globalErrCatch);
 
 export default app;
+

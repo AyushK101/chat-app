@@ -1,8 +1,8 @@
 export default class ApiResponse {
   constructor(
-    public statusCode: string,
+    public statusCode: number,
     public message: string,
-    public data: string,
+    public data: unknown,
   ) {
     this.statusCode = statusCode;
     this.message = message;

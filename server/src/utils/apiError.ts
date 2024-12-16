@@ -11,13 +11,21 @@ export default class ApiError extends Error implements ApiErrorType {
     public statusCode: number,
     public message: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public error: any,
+    public error?: any,
     public stack?: string,
   ) {
     super(message);
     this.statusCode = statusCode;
     this.message = message;
-    this.error = error;
+    
+     // Serialize the error into a plain object
+     this.error = error
+     ? {
+         message: error?.message,
+         name: error?.name,
+         stack: error?.stack,
+       }
+     : null;
 
     if (stack) {
       this.stack = stack;
