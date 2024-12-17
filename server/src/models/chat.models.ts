@@ -17,6 +17,10 @@ export const chatSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
+  content: {
+    type: String,
+    required: true
+  },
   is_read: {
     type: Boolean,
     required: true

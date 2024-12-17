@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "dotenvx run -- nodemon ./dist/index.js",
+    "dev": "dotenvx run -- npx nodemon ./dist/index.js",
     "lint": "eslint ./src/**/*.ts",
     "format": "eslint ./src/**/*.ts --fix",
     "prod": "",
@@ -18,11 +18,10 @@
   "license": "ISC",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.29.0",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/morgan": "^1.9.9",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "axios": "^1.7.9",
+    "cookie": "^1.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "eslint-config-prettier": "^9.1.0",
@@ -32,11 +31,14 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2",
+    "socket.io": "^4.8.1",
     "ts-node": "^10.9.2",
     "winston": "^3.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/morgan": "^1.9.9",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
