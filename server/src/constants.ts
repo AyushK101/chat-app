@@ -1,5 +1,5 @@
 const MONGO_URI = process.env.MONGO_URI || '';
-const ORIGIN = process.env.NODE_ENV == 'production' ? '' : process.env.ORIGIN || '';
+const ORIGIN = process.env.NODE_ENV == 'production' ? '' : process.env.ORIGIN;
 const PORT = process.env.PORT || 3000
 const OAUTH_URI = process.env.OAUTH_URI
 const JWT_SECRET = process.env.JWT_SECRET || ""

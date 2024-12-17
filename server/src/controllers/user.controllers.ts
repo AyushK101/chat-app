@@ -28,14 +28,14 @@ const signup = asyncHandler(async (req: Request, res: Response) => {
     res
       .cookie('token', token, options)
       .status(200)
-      .json(new ApiResponse(400, 'existing user found', token));
+      .json(new ApiResponse(400, 'existing user found', existingUser));
   } else {
     const newUser = await User.create({ username, email, picture });
     const token = newUser.generateToken();
     res
       .cookie('token', token, options)
       .status(201)
-      .json(new ApiResponse(200, 'new user created', token));
+      .json(new ApiResponse(200, 'new user created', newUser));
   }
 });
 
@@ -56,7 +56,7 @@ const signupDummy = asyncHandler( async (req: Request, res: Response)=>{
   res
     .cookie('token',token)
     .status(200)
-    .json(new ApiResponse(200,'userCreated successfully',newUser))
+    .json(new ApiResponse(200,'userCreated successfully',existingUser))
 })
 
 const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {

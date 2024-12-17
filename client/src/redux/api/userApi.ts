@@ -7,7 +7,6 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URI,
     credentials: 'include',
-    cache: 'no-cache'
   }),
   tagTypes: [''],
   endpoints: (builder) => ({

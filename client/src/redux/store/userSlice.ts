@@ -1,5 +1,5 @@
 import { UserSliceType } from "@/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: {authStatus: boolean, user: UserSliceType | null} = {
   authStatus: false,
@@ -14,12 +14,17 @@ const userSlice = createSlice({
   name: 'userSlice',
   initialState,
   reducers: {
-    loginUserSlice: (state, action) => {
-      state = action.payload
+    loginUserSlice: (state, action: PayloadAction<{authStatus: boolean, user: UserSliceType}>) => {
+      // console.log('in loginUserSlice',action.payload,action.type)
+      // state = {authStatus: true, user: action.payload.user}
+      state.authStatus = true
+      state.user = action.payload.user
     },
     logoutUserSlice: (state) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      state = {authStatus: false, user: null}
+       
+      // state = {authStatus: false, user: null}
+      state.authStatus = false
+      state.user = null
     }
   }
 })

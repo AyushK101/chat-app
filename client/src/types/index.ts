@@ -34,6 +34,7 @@ export type registerApiType =  {
     _id: string
     username: string
     email: string
+    picture: string
     createdAt: string
     updatedAt: string
     __v: number

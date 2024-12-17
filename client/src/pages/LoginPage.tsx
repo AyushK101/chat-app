@@ -18,9 +18,10 @@ const LoginPage = () => {
 
   useEffect( ()=> {
     if(isSuccess) {
-      dispatch(loginUserSlice({user: data?.data, authStatus: true}))
+      console.log(data?.data)
       toast.success("logged in successfully",{icon: "✅"})
-      navigate('/')
+      dispatch(loginUserSlice({user: data?.data, authStatus: true}))
+      navigate('/chat')
     }
     if(isError) {
       console.log("user logged out in Login")
