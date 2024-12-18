@@ -41,3 +41,48 @@ export type registerApiType =  {
   }
   success: boolean
 }
+
+export type getCurrentUserType = {
+  statusCode: number
+  message: string
+  data: {
+    _id: string
+    username: string
+    picture: string
+    email: string
+    createdAt: string
+    updatedAt: string
+    __v: number
+  }
+}
+export type getAllUserTypes = {
+  statusCode: number
+  message: string
+  data: Array<{
+    _id: string
+    username: string
+    email: string
+    __v: number
+    createdAt: string
+    updatedAt: string
+    picture?: string
+  }>
+}
+
+
+export type UserType = {
+  _id: string
+    username: string
+    email: string
+    __v: number
+    createdAt: string
+    updatedAt: string
+    picture?: string
+}
+
+export  type  createRouteType = {
+  isGroup: boolean,
+  groupParticipants: [UserType] | null
+  groupName: string,
+  oneToOneUser: UserType
+}

@@ -1,4 +1,4 @@
-import {  registerApiType } from '@/types'
+import {  getCurrentUserType, registerApiType } from '@/types'
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 
@@ -8,7 +8,6 @@ export const userApi = createApi({
     baseUrl: import.meta.env.VITE_BASE_URI,
     credentials: 'include',
   }),
-  tagTypes: [''],
   endpoints: (builder) => ({
     loginUserApi: builder.mutation<registerApiType,{credentials: string}>({
       query: (data: {credentials: string}) => ({
@@ -16,12 +15,27 @@ export const userApi = createApi({
         body: data,
         method: 'POST',
       })
+    }),
+    logoutUserApi: builder.query({
+      query: () => ({
+        url: "/user/logout",
+        method: 'GET',
+      })
+    }),
+    getUserApi: builder.query<getCurrentUserType,null>({
+      query: () => ({
+        url: '/user/get',
+        method: 'GET'
+      })
     })
-  })
+    })
+
 
 
 })
 
 export const  {
-  useLoginUserApiMutation
+  useLoginUserApiMutation,
+  useGetUserApiQuery,
+  useLazyLogoutUserApiQuery
 } = userApi

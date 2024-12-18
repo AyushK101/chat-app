@@ -55,3 +55,10 @@ ex: /*user1socket*/socket.to('user2id').emit('event',data)
 ```js
   socket.join('roomName')
 ```
+
+
+------
+- io.emit()
+- io.to('room1').to('room2').emit(event,..args);
+> In Socket.IO, both server.in and server.to are used to target specific rooms or namespaces for broadcasting messages.
+- io.in('room1').emit(event,...args);

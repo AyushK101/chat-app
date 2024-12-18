@@ -13,18 +13,18 @@ import ProtectedRoute from './components/ProtectedRoute.tsx'
 const router = createBrowserRouter([
   {
     path: "",
-    element: <LoginPage />
-  },
-  {
-    path: '/chat',
-    element: <ProtectedRoute />,
+    element: <ProtectedRoute/>,
     children: [
       {
-        path: '',
+        path: '/',
         element: <App/>
       }
     ]
+  },{
+    path: "/login",
+    element: <LoginPage/>
   }
+
 ])
 
 createRoot(document.getElementById('root')!).render(

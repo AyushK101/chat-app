@@ -1,5 +1,5 @@
 import { CookieOptions, Request, Response } from 'express';
-import { User } from '../models/user.models';
+import { User } from '../models/user.model';
 import { asyncHandler } from '../utils/asyncHandler';
 import ApiError from '../utils/apiError';
 import axios from 'axios';
@@ -39,28 +39,35 @@ const signup = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-const signupDummy = asyncHandler( async (req: Request, res: Response)=>{
-  const { username, email} = req.body
-  if(!username || !email) {
-    throw new ApiError(400,'username or email is required')
+const signupDummy = asyncHandler(async (req: Request, res: Response) => {
+  const { username, email } = req.body;
+  if (!username || !email) {
+    throw new ApiError(400, 'username or email is required');
   }
-  
-  const existingUser = await User.findOne({email})
-  if(existingUser) {
-    throw new ApiError(404,'user already exists',existingUser)
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new ApiError(404, 'user already exists', existingUser);
   }
-  const newUser = await User.create({username,email})
-  const token =  newUser.generateToken()
+  const newUser = await User.create({ username, email });
+  const token = newUser.generateToken();
   console.log(token);
-  
+
   res
-    .cookie('token',token)
+    .cookie('token', token)
     .status(200)
-    .json(new ApiResponse(200,'userCreated successfully',existingUser))
-})
+    .json(new ApiResponse(200, 'userCreated successfully', existingUser));
+});
 
 const getCurrentUser = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json(new ApiResponse(200, 'current user fetched successfully', req.user));
 });
 
-export { signup, getCurrentUser,signupDummy };
+const logout = asyncHandler(async (req: Request, res: Response) => {
+  res
+    .cookie('token', '', options)
+    .status(200)
+    .json(new ApiResponse(200, 'use logged out successfully', ''));
+});
+
+export { signup, getCurrentUser, signupDummy, logout };
