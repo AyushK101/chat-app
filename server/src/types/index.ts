@@ -1,4 +1,4 @@
-import { IUserDocument } from '../models/user.model';
+// import { IUserDocument } from '../models/user.model';
 
 export type jwtPayloadType = {
   _id: string;
@@ -20,8 +20,8 @@ declare module 'jsonwebtoken' {
   }
 }
 
-declare module 'socket.io' {
-  export interface Socket {
-    user: IUserDocument;
-  }
-}
+// declare module 'socket.io' {
+//   export interface Socket {
+//     user: IUserDocument;
+//   }
+// }

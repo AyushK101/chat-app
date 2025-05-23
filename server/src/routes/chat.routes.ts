@@ -1,32 +1,24 @@
 import { Router } from "express";
+import { accessChat, chatHealth, createGroupChat, fetchChat, addToGroup, groupRemove, renameGroupChat } from "../controllers/chat.controller";
 import { authJwt } from "../middlewares/auth.middleware";
-import { addNewParticipantInGroupChat, createAGroupChat, createOrGetAOneOnOneChat, deleteGroupChat, deleteOneOnOneChat, getAllUserChats, getAllUsers, getGroupChatDetails, leaveGroupChat, removeParticipantFromGroupChat, renameGroupChat } from "../controllers/chat.controller";
 
 const router = Router()
 
-router.use(authJwt)
+
+router.route('/health').get(chatHealth)
+
+router.route('/').get( authJwt, fetchChat )
+router.route('/').post( authJwt, accessChat );
+
+router.route('/group').post( authJwt, createGroupChat )
+router.route('/group').put( authJwt, renameGroupChat )
+router.route('/groupremove').put( authJwt, groupRemove )  
+router.route('/add').put( authJwt, addToGroup )  
 
 
-router.route('/').get(getAllUserChats)
-router.route('/users').get(getAllUsers)
-router.route('/c/:receiverId').post(createOrGetAOneOnOneChat)
 
-router
-  .route('group')
-  .post(createAGroupChat)
 
-router
-  .route('/group/:chatId')
-  .get(getGroupChatDetails)
-  .patch(renameGroupChat)
-  .delete(deleteGroupChat)
 
-router.route('group/:chatId/:participantId')
-  .post(addNewParticipantInGroupChat)
-  .delete(removeParticipantFromGroupChat)
 
-router
-  .route('/leave/group/:chatId')
-  .post(leaveGroupChat)
-  .delete(deleteOneOnOneChat)
-export default router
+export default router;
+

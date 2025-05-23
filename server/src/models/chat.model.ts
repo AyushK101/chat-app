@@ -1,30 +1,36 @@
+// chat name
+// isGroupChat
+// users
+// latestMessage
+// groupAdmin
+
 import mongoose from 'mongoose';
 
 const chatSchema = new mongoose.Schema(
   {
-    name: {
+    chatName: {
       type: String,
       required: true,
+      trim: true,
     },
     isGroupChat: {
       type: Boolean,
-      required: true,
       default: false,
     },
-    participants: [
+    users: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
       },
     ],
-    admin: {
+    groupAdmin: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     },
-    lastMessage: {
+    latestMessage: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Message"
-    }
+      ref: 'Message',
+    },
   },
   {
     timestamps: true,

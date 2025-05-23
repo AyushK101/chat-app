@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const MONGO_URI = process.env.MONGO_URI || '';
 const ORIGIN = process.env.NODE_ENV == 'production' ? '' : process.env.ORIGIN;
 const PORT = process.env.PORT || 3000
