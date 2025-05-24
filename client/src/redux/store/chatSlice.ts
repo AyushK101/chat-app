@@ -1,27 +1,42 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+export type selectedChatType = { _id: string }
 
-const initialState = {
-  addChatDialogState: false,
-  chatItems: []
+const initialState: { chats: [], selectedChat: selectedChatType, chatBoxToggle: boolean} = {
+  chats: [],
+  selectedChat: {_id: ""},
+  chatBoxToggle: false
 }
 
 const chatSlice = createSlice({
   name: 'chatSlice',
   initialState,
   reducers: {
-    setChatItems: (state, action) => {
-      state.addChatDialogState = true
-      state.chatItems = action.payload
+    setChatItemsSlice: (state, action) => {
+      state.chats = action.payload
     },
-    unsetChatItems: (state) => {
-      state.addChatDialogState = false
-      state.chatItems = []
+
+    unsetChatItemsSlice: (state) => {
+      state.chats = []
+    },
+
+    setSelectedChatSlice: (state, action: PayloadAction<{_id: string}>) => {
+      state.selectedChat = action.payload
+    },
+
+    chatBoxToggleSlice: (state) => {
+      state.chatBoxToggle = !state.chatBoxToggle;
     }
+
   }
   
 })
 
-export const {setChatItems } = chatSlice.actions
+export const {setChatItemsSlice, unsetChatItemsSlice, setSelectedChatSlice, chatBoxToggleSlice } = chatSlice.actions
+
+export type setChatItemsSliceType = typeof chatSlice.actions.setChatItemsSlice
+export type unsetChatItemsSliceType = typeof chatSlice.actions.unsetChatItemsSlice
+export type setSelectedChatSliceType = typeof chatSlice.actions.setSelectedChatSlice
+export type chatBoxToggleSliceType = typeof chatSlice.actions.chatBoxToggleSlice
 
 export default chatSlice.reducer

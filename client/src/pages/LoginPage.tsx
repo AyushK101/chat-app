@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router"
 import { Container, Loading } from "../components"
-import { CredentialResponse, GoogleLogin } from "@react-oauth/google"
+import {  GoogleLogin, type CredentialResponse } from "@react-oauth/google"
+// import type CredentialResponse from '@react-oauth/google'
 import { useLoginUserApiMutation } from "../redux/api/userApi"
 import { useAppDispatch } from "../redux/store"
 import toast from "react-hot-toast"
 import { loginUserSlice, logoutUserSlice } from "../redux/store/userSlice"
-import { LoginErrorType } from "../types"
+import type { LoginErrorType } from "../types"
 import { useEffect } from "react"
 
 

@@ -1,4 +1,4 @@
-import { RootStore } from "@/redux/store"
+import type { RootStore } from "@/redux/store"
 import { useSelector } from "react-redux"
 import { Navigate, Outlet, useNavigate } from "react-router"
 import { useGetUserApiQuery } from '@/redux/api/userApi'

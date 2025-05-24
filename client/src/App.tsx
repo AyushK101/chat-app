@@ -11,11 +11,10 @@ function App() {
 
   return (
     <>
-      {/* {
-        addChatDialogState && <AddChatDialog/>
-      } */}
-      <Header/>
+      {/* <Container className=""> */}
+         <Header/>
       <ChatPage/>
+      {/* </Container> */}
     </>
   )
 }

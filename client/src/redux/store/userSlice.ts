@@ -1,6 +1,6 @@
-import { UserSliceType } from "@/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
+import type { UserSliceType } from "@/types";
+import { createSlice,} from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 const initialState: {authStatus: boolean, user: UserSliceType | null} = {
   authStatus: false,
   user: {
