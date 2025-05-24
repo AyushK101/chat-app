@@ -11,6 +11,6 @@ router.route('/logout').get(logout)
 
 // chats & messages
 
-router.route('/users').get( authJwt, allUsers)
+router.route('/').get( authJwt, allUsers)
 
 export default router

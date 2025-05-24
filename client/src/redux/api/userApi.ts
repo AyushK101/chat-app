@@ -1,4 +1,4 @@
-import type {  getCurrentUserType, registerApiType, searchUserApiReturnType } from '@/types'
+import type {  getCurrentUserType, searchUserApiReturnType, UserSliceType } from '@/types'
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 
@@ -11,7 +11,7 @@ export const userApi = createApi({
 
   endpoints: (builder) => ({
 
-    loginUserApi: builder.mutation<registerApiType,{credentials: string}>({
+    loginUserApi: builder.mutation<UserSliceType,{credentials: string}>({
       query: (data: {credentials: string}) => ({
         url: "/users/signup",
         body: data,

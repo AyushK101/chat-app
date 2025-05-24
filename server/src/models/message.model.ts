@@ -5,19 +5,19 @@ const messageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  attachments: {
-    type: [
-      {
-        url: String,
-        localPath: String,
-      }
-    ]
-  },
+  // attachments: {
+  //   type: [
+  //     {
+  //       url: String,
+  //       localPath: String,
+  //     }
+  //   ]
+  // },
   chatId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Chat",
   },
-  sender: {
+  senderId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   }

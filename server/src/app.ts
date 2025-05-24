@@ -4,14 +4,13 @@ import cors from 'cors';
 import { morganMiddleware } from './utils/logger';
 import globalErrCatch from './utils/globalErrCatch';
 // import { Server } from 'socket.io';
-import http from 'http'
+// import http from 'http'
 import { ORIGIN } from './constants';
 
 
 
 
 const app = e();
-const httpServer = http.createServer(app);
 
 // const io = new Server(httpServer,{
 //   pingTimeout: 5000,
@@ -28,6 +27,10 @@ const httpServer = http.createServer(app);
 app.use(cookieParser());
 app.use(e.json()); // recognize incoming req. object as JSON object OR parse `application/json`
 app.use(e.urlencoded({ extended: true })); // recognize incoming req. object as strings or arrays OR parse ` application/x-www-form-urlencoded`
+
+// console.log('CORS ORIGIN:', ORIGIN); // must match frontend
+
+
 app.use(
   cors({
     origin: ORIGIN,
@@ -38,11 +41,11 @@ app.use(
 app.use(morganMiddleware);
 import userRouter from './routes/user.routes';
 import chatRouter from './routes/chat.routes';
-// import messageRouter from './routes/message.routes'
+import messageRouter from './routes/message.routes'
 app.use('/api/v1/users', userRouter);
 
 app.use('/api/v1/chats',chatRouter)
-// app.use('/api/v1/messages',messageRouter)
+app.use('/api/v1/messages',messageRouter)
 app.use(globalErrCatch);
 
-export default httpServer;
+export default app;

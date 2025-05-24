@@ -1,5 +1,6 @@
 import connectDb from './db/db';
-import httpServer from './app';
+// import httpServer from './app';
+import { httpServer } from './lib/socket';
 import 'colors';
 import dotenv from 'dotenv';
 dotenv.config();

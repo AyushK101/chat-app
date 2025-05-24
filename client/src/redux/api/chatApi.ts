@@ -1,4 +1,4 @@
-import type {  addToGroupChatReturnType, addToGroupChatType, createGroupChatReturnType, createGroupChatType, getAllUserChatsReturnType, oneToOneChatReturnType, oneToOneChatType, removeFromGroupReturnType, removeFromGroupType, renameGroupChatReturnType, renameGroupChatType } from "@/types";
+import type {  addToGroupChatReturnType, addToGroupChatType, createGroupChatReturnType, createGroupChatType, createMessageReturnType, createMessageType, fetchMessageReturnType, fetchMessagesType, getAllUserChatsReturnType, oneToOneChatReturnType, oneToOneChatType, removeFromGroupReturnType, removeFromGroupType, renameGroupChatReturnType, renameGroupChatType } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
@@ -10,7 +10,7 @@ export const chatApi = createApi({
     credentials: 'include',
   }),
 
-  tagTypes: ['myChatItems'],
+  tagTypes: ['myChatItems','reFetchOnSent'],
   endpoints: (builder) => ({
 
     // fetchChat : get user's all chats
@@ -66,10 +66,29 @@ export const chatApi = createApi({
         method: 'PUT'
       }),
       invalidatesTags: ['myChatItems']
+    }),
+
+      //! MESSAGE API 
+    createMessage: builder.mutation<createMessageReturnType, createMessageType>({
+      query: (body) => ({
+        url: "/messages/",
+        body: body,
+        method: "POST",
+        invalidatesTags: ["reFetchOnSent"] // providing tag for refetching every time send message 
+        // ✅ Mutation invalidates
+      }),
+
+    }),
+
+    fetchMessages: builder.query<fetchMessageReturnType, fetchMessagesType>({
+      query: ({chatId}) => ({
+        url: `/messages/${chatId}`,
+        method: 'GET', 
+      }),
+      providesTags: ['reFetchOnSent'] // query provides
     })
-  }),
 
-
+  })
 })
 
 
@@ -77,6 +96,16 @@ export const {
   useGetAllUserChatsQuery,
   useCreateOneToOneChatMutation,
   useCreateGroupChatMutation,
+  useCreateMessageMutation,
+  useFetchMessagesQuery,
+  useLazyFetchMessagesQuery,
+
+
+  //! remaining
+  useAddToGroupChatMutation,
+  useRemoveFromGroupMutation,
+  useRenameGroupChatMutation
+
 
   
   

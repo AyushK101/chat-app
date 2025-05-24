@@ -15,7 +15,7 @@ const options: CookieOptions = {
 
 const signup = asyncHandler(async (req: Request, res: Response) => {
   const { credentials: cred } = req.body;
-  console.log(cred)
+  // console.log(cred)
   if (!cred) {
     throw new ApiError(404, 'credential is required');
   }
@@ -70,7 +70,7 @@ const logout = asyncHandler(async (req: Request, res: Response) => {
     .json(new ApiResponse(200, 'use logged out successfully', ''));
 });
 
-// api/user/search?=john
+// api/user/search?=john // search users
 const allUsers = asyncHandler(async (req: Request, res: Response) => {
   console.log(req.query.search);
 

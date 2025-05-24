@@ -38,7 +38,7 @@ const SideDrawer = () => {
   
 
   return (
-    <Container className='px-6 flex gap-2 flex-wrap'>
+    <Container className='px-4 flex gap-2 flex-wrap'>
       <GroupChatModel className={`${groupChatToggle? 'hidden' : '' } absolute top-48 left-48`} />
       <div className={`rounded-2xl p-2 m-2 bg-slate-600 h-fit overflow-y-scroll max-h-96 max-w-2xl min-w-2xs absolute z-3 ${toggle ? 'hidden' : ''}`} id='drawer'>
         <Input className='bg-gray-300 border-gray-500' onChange={(e)=>{

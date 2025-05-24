@@ -47,7 +47,7 @@ const accessChat = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const fetchChat = asyncHandler(async (req: Request, res: Response) => {
-  console.log(req.user._id);
+  // console.log(req.user._id);
   Chat.find({
     users: { $elemMatch: { $eq: { _id: req.user._id } } },
   })
@@ -117,8 +117,31 @@ const renameGroupChat = asyncHandler(async (req, res) => {
     res.json(updatedChat);
   }
 });
-const groupRemove = asyncHandler(async (req: Request, res: Response) => {
-  res.status(200).json(new ApiResponse(200, 'chats', true));
+
+
+const removeFromGroup = asyncHandler(async (req, res) => {
+  const { chatId, userId } = req.body;
+
+  // check if the requester is admin
+
+  const removed = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $pull: { users: userId },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!removed) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(removed);
+  }
 });
 
 const addToGroup = asyncHandler(async (req, res) => {
@@ -147,4 +170,4 @@ const addToGroup = asyncHandler(async (req, res) => {
 });
 
 
-export { chatHealth, accessChat, fetchChat, addToGroup, createGroupChat, renameGroupChat, groupRemove };
+export { chatHealth, accessChat, fetchChat, addToGroup, createGroupChat, renameGroupChat, removeFromGroup };

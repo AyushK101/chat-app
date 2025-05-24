@@ -17,18 +17,18 @@ const ChatPage = () => {
   return (
     <>
     <Container className=''>
-          <SideDrawer/>
-
-    <div className='grid grid-cols-12 min-h-[532px]  p-2 m-2 border-white '>
-      <div className={`col-span-12 md:col-span-4 border rounded-lg mx-2  md:block ${chatBoxToggle ? 'hidden' : ''}`}>
+        <SideDrawer/>
+    </Container>
+    <Container className='flex justify-center max-h-[504px] p-2 m-2'>
+      <div className={`overflow-y-auto border w-full  rounded-lg mx-2  md:block ${chatBoxToggle ? 'hidden' : ''}`}>
       <section className='col-span-4'>
         {<MyChats/>}
       </section>
       </div>
-      <section className={`col-span-12 md:col-span-8  border rounded-lg md:block  ${chatBoxToggle ? '' : 'hidden'}`}>
+      <section className={`border rounded-lg mx-2 w-full md:min-w-2xl  md:block  ${chatBoxToggle ? '' : 'hidden'}`}>
         {<ChatBox/>}
       </section>
-    </div>
+
     </Container>
     
 

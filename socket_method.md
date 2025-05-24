@@ -1,0 +1,3 @@
+- every time user opens the app, he should be connected to his own personal socket.
+- socket.in // sends to all except the current socket
+- io.to // sends to all ( even sender ) 

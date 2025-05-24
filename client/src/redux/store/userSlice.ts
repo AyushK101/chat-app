@@ -5,6 +5,7 @@ const initialState: {authStatus: boolean, user: UserSliceType | null} = {
   authStatus: false,
   user: {
     username: "ayush",
+    _id: "",
     email: "socialacc211@gmail.com",
     picture: "/favicon.png"
   }
@@ -17,6 +18,7 @@ const userSlice = createSlice({
     loginUserSlice: (state, action: PayloadAction<{authStatus: boolean, user: UserSliceType}>) => {
       // console.log('in loginUserSlice',action.payload,action.type)
       // state = {authStatus: true, user: action.payload.user}
+      // console.log(action.payload.user)
       state.authStatus = true
       state.user = action.payload.user
     },

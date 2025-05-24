@@ -36,7 +36,7 @@ const LoginPage = () => {
 
 
   async function onSuccess(response:  CredentialResponse){ 
-    console.log(response);
+    // console.log(response);
     await LoginUserApi({credentials: response.credential || ""})
     
   }
