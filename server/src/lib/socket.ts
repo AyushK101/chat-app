@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import http from 'http';
 import { ORIGIN } from "../constants";
 import app from "../app";
+import { IUserDocument } from "../models/user.model";
 
 const httpServer = http.createServer(app);
 
@@ -39,7 +40,7 @@ io.on('connection',(socket)=> {
   // new message
   socket.on("new_message", (newMessage)=>{
     const chat = newMessage?.chatId; // have to send to join_chat rooms
-      chat?.users?.forEach( user => {      
+      chat?.users?.forEach( (user: IUserDocument ) => {      
       io.to(user?._id).emit('message_received',newMessage);  // `'in'` users's room as we have created each user's own room
     })
   })

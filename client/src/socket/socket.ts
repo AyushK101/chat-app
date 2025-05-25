@@ -7,8 +7,8 @@ import { io } from "socket.io-client";
 
 
 
-
-const socket = io("http://localhost:5000", {
+// console.log(import.meta.env.VITE_SOCKET_BASE_URI)
+const socket = io(import.meta.env.VITE_SOCKET_BASE_URI, {
   autoConnect: false,
   transports: ["websocket"],
   withCredentials: true,

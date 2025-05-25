@@ -12,19 +12,19 @@ import toast from "react-hot-toast";
 import { useCreateMessageMutation, useFetchMessagesQuery, useLazyFetchMessagesQuery } from "@/redux/api/chatApi";
 import type { messageType } from "@/types";
 import socket, { connectSocket } from "@/socket/socket";
-import Lottie from 'react-lottie';
-import animationData from '../animations/typing.json';
+// import Lottie from 'react-lottie';
+// import animationData from '../animations/typing.json';
 import Typing from "./Typing";
 
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  // const defaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: animationData,
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
 
 const ChatBox = () => {
@@ -69,7 +69,7 @@ const ChatBox = () => {
         setAllMes(result.data);
       } catch (err: unknown) {
         console.error(err);
-        toast.error(err?.data?.message || "Failed to fetch", { icon: "🔴" });
+        toast.error(JSON.stringify?.(err), { icon: "🔴" });
       }
     }
     fetchMessages()
@@ -86,9 +86,9 @@ const ChatBox = () => {
   }, [chatId, socketConnected])
 
   // dummy for debug
-  useEffect(() => {
-    console.log("All messages updated", allMes);
-  }, [allMes]);
+  // useEffect(() => {
+  //   console.log("All messages updated", allMes);
+  // }, [allMes]);
 
   // update on message_received event
   useEffect(() => {
