@@ -31,6 +31,114 @@ Client (React + Redux + Socket.IO)
                  |
               MongoDB
 ```
+
+# Capacity & Performance Estimation
+🧪 These numbers are approximations based on typical hardware and default configurations. Actual results may vary depending on optimization, deployment platform, and network conditions.
+
+## ⚙️ System Overview
+
+| Component       | Technology             | Notes                                           |
+|----------------|------------------------|-------------------------------------------------|
+| WebSocket App  | Node.js + Socket.IO    | Real-time bidirectional communication           |
+| Broker         | Redis (Pub/Sub)        | Message sync across processes                  |
+| Load Balancer  | NGINX (Sticky Sessions)| Ensures clients stick to the same server        |
+| DB             | MongoDB                | For persistent user/session/quiz data           |
+
+## 🧮 1. WebSocket Server Capacity (Node.js + Socket.IO)
+Capacity depends on:
+
+- CPU and event loop latency (WebSocket is async but CPU-bound logic can block)
+
+- RAM per connection (metadata, buffer, and ping-pong interval)
+
+- Network I/O
+
+#### 🔢 Rough Estimation
+| Metric	| Value| 
+|---------|-------|
+| Average memory per client	| ~40KB
+| Messages/sec/client	| 1–10
+| Max connections/server | 	~10,000–30,000*
+| Max emit latency |	~5–20ms under low load
+| Number of CPU cores	1 |  (single Node process)
+
+```md
+-💡 With 1 vCPU and 1GB RAM, a single Node.js WebSocket server using Socket.IO can reliably support ~10,000 concurrent connections, assuming:  
+- Keep-alive (heartbeat) every 25s  
+- Minimal per-client state  
+- Redis Pub/Sub handles cross-process broadcasts  
+## If you launch 4 replicas, that's ~40,000 concurrent users under average load.
+```
+
+## 🔄 2. Redis Pub/Sub Capacity
+| Metric	| Value | 
+|--------|---------
+| Max messages/sec	| 500,000+ (on a single Redis instance)
+| Typical latency |	~1ms
+| Max subscribers/topic	| 10,000+
+| Memory per channel	| negligible
+-----------------------------
+
+```md
+⚠️ Redis Pub/Sub does not persist messages. If your system goes down or a client disconnects, those messages are lost.
+
+Redis can easily handle broadcasting between dozens of WebSocket servers for chat applications.
+```
+
+## 🧊 3. NGINX Load Balancer
+| Metric	| Value | 
+|---------|-------|
+| Max concurrent connections| 	512–65,000 (tuned via worker_rlimit_nofile)
+| Max throughput | 	10k–50k requests/sec (depends on CPU)
+-------------------
+
+
+## 🧮 4. MongoDB Capacity
+MongoDB is not on the critical path for real-time messages (handled by Redis + Socket.IO), but it handles:
+
+- User logins
+- Chat history 
+- Session management
+
+| Metric	| Value |
+|---------|--------|
+| Write capacity (default) |	5,000+ ops/sec
+| Read capacity (default)	| 10,000+ ops/sec
+| Latency (read/write)	| ~1–10ms
+---------------
+
+### Can be Scaled with: 
+
+- Replica Sets for high availability
+- Sharding for horizontal scaling
+- Indexing to reduce query latency
+
+# 🧠 5. Total System Estimation
+Assume 1 vCPU, 1GB RAM per Node.js server.
+
+| Component	Est. | Capacity
+|----------------|----------
+| WS server (1 replica) |	~10,000 concurrent clients
+| WS server (4 replicas) |	~40,000 concurrent clients
+| Redis broker	| ~500,000+ messages/sec
+| MongoDB (single) | 	~10,000 ops/sec (reads/writes)
+| NGINX	| ~10k–50k connections/sec (tunable)
+-----------
+<!-- 
+# 📌 Benchmarks Tools to Test
+- `autocannon` – HTTP/WebSocket load testing
+
+- `socket.io-benchmarking`
+- 
+- `wrk` – HTTP benchmarking
+- 
+- `redis-benchmark`
+- 
+- [`mongostat`, `mongotop`] – MongoDB monitoring -->
+
+
+
+
 # ⚙️ Technologies Used
 ## 💻 Frontend
 React + TypeScript
@@ -90,9 +198,9 @@ round robbin connection distribution via NGINX
 
 Fully containerized with Docker
 
-## Architecture
+## 📸 Architecture
 
-![alt text](server/arch.png)
+![alt text](arch.png)
 
 
 
