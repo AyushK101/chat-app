@@ -14,9 +14,7 @@ It supports high concurrency via multiple Node.js processes, Redis Pub/Sub for r
 
 # 🧱 Architecture
 High-Level Architecture
-pgsql
-Copy
-Edit
+
 ```code
 Client (React + Redux + Socket.IO)
       |
@@ -43,6 +41,8 @@ Client (React + Redux + Socket.IO)
 | Broker         | Redis (Pub/Sub)        | Message sync across processes                  |
 | Load Balancer  | NGINX (Sticky Sessions)| Ensures clients stick to the same server        |
 | DB             | MongoDB                | For persistent user/session/quiz data           |
+
+> NOTE sticky session is future scope here.
 
 ## 🧮 1. WebSocket Server Capacity (Node.js + Socket.IO)
 Capacity depends on:
@@ -80,6 +80,7 @@ Capacity depends on:
 -----------------------------
 
 ```md
+> NOTE 
 ⚠️ Redis Pub/Sub does not persist messages. If your system goes down or a client disconnects, those messages are lost.
 
 Redis can easily handle broadcasting between dozens of WebSocket servers for chat applications.
@@ -114,7 +115,7 @@ MongoDB is not on the critical path for real-time messages (handled by Redis + S
 - Indexing to reduce query latency
 
 # 🧠 5. Total System Estimation
-Assume 1 vCPU, 1GB RAM per Node.js server.
+Assume 1 vCPU, 1GB RAM per Node.js server/process/container.
 
 | Component	Est. | Capacity
 |----------------|----------
@@ -141,28 +142,28 @@ Assume 1 vCPU, 1GB RAM per Node.js server.
 
 # ⚙️ Technologies Used
 ## 💻 Frontend
-React + TypeScript
+- React + TypeScript
 
-Redux Toolkit + RTK Query
-
-Socket.IO Client
-
-TailwindCSS
-
+- Redux Toolkit + RTK Query
+ 
+- Socket.IO Client
+ 
+- TailwindCSS
+ 
 ## 🖥️ Backend
-Node.js + TypeScript
+- Node.js + TypeScript
+ 
+- Express.js
+ 
+- Socket.IO Server
+ 
+- MongoDB (via Mongoose)
+ 
+- Redis (Pub/Sub for message syncing)
+ 
+- Docker & Docker Compose
 
-Express.js
-
-Socket.IO Server
-
-MongoDB (via Mongoose)
-
-Redis (Pub/Sub for message syncing)
-
-Docker & Docker Compose
-
-NGINX (load balancing)
+- NGINX (load balancing)
 
 <!-- 📦 Project Structure
 css
@@ -184,24 +185,19 @@ Edit
 ├── docker-compose.yml
 └── README.md -->
 # 🚀 Features
-Real-time communication via Socket.IO
+- Real-time communication via Socket.IO
 
-Horizontal scalability with Redis Pub/Sub
+- Horizontal scalability with Redis Pub/Sub
 
-Clean modular code using TypeScript
+- Clean modular code using TypeScript
 
-round robbin connection distribution via NGINX
+- round robbin connection distribution via NGINX
 
-<!-- Admin panel for managing quiz sessions -->
-
-<!-- Multiple user roles: Admin, Participant, Spectator -->
-
-Fully containerized with Docker
+- Fully containerized with Docker ( frontend optional )
 
 ## 📸 Architecture
 
 ![alt text](arch.png)
-
 
 
 # 🐳 Dockerized Deployment
@@ -215,34 +211,32 @@ pnpm i
 docker build -f Dockerfile -t chat_server:latest .
 docker-compose up --build
 ```
+
 > This will spin up:
+```md
+- 4 WebSocket servers (ws1 to ws4)
 
-4 WebSocket servers (ws1 to ws4)
+- A Redis server
+ 
+- A MongoDB database
+ 
+- An NGINX reverse proxy (port 8080)
+ 
+- Frontend server (optional, based on setup)
+```
 
-A Redis server
-
-A MongoDB database
-
-An NGINX reverse proxy (port 8080)
-
-Frontend server (optional, based on setup)
-
-Access the REST ENPOINTS at http://localhost:8080/api/v1/  
-and websocket connection at http://localhost:8080
+> Access the REST ENPOINTS at http://localhost:8080/api/v1/  
+> and websocket connection at http://localhost:8080
 
 # 📡 WebSocket Scaling
 Each Node.js server is a separate container and connects to Redis for message broadcasting.
 
 Redis Pub/Sub ensures:
 
-Messages sent to one container are propagated to all others.
+- Messages sent to one container are propagated to all others.
 
-Real-time consistency across the cluster.
-
-
-> FUTURE SCOPE NGINX with Sticky Sessions:  
-> Routes users consistently to the same backend server (important for WebSocket state).  
-> Configured using ip_hash in nginx.conf.  
+- Real-time consistency across the cluster.
+ 
 
 # 🧪 Testing the App
 Open multiple browser tabs or devices.
@@ -254,14 +248,15 @@ Observe real-time updates and chat flow across tabs.
 Monitor docker-compose logs -f to trace server activity.
 
 # 🛠️ Development Setup
-Prerequisites
+## Prerequisites
+```
 Node.js v20+
 
 Docker & Docker Compose
 
 pnpm or npm
-
-Local Dev (Optional without Docker)
+```
+## Local Dev (Optional without Docker)
 ```bash
 cd backend
 pnpm i
@@ -272,6 +267,7 @@ pnpm i
 pnpm run dev
 Ensure local MongoDB and Redis are running or update .env to connect to Docker containers.
 ```
+
 # ✍️ Author
 Ayush Kumar — Engineer, Builder, Learner
 🔗 GitHub: @ayushk101
@@ -279,15 +275,17 @@ Ayush Kumar — Engineer, Builder, Learner
 
 ## 🏁 Future Improvements
 
-Rate Limiting and Throttling
+- Rate Limiting and Throttling
+- 
+- User Presence Detection
+- 
+- Horizontal Scaling with Kubernetes
+- 
+- HA Redis Setup (Redis Sentinel or Cluster)
 
-User Presence Detection
-
-Horizontal Scaling with Kubernetes
-
-HA Redis Setup (Redis Sentinel or Cluster)
-
-Sticky Session using IP hash or cookie
+- FUTURE SCOPE NGINX with Sticky Sessions:  
+  - Routes users consistently to the same backend server (important for WebSocket state).  
+  - Configured using ip_hash in nginx.conf. 
 
 
 <!-- 
