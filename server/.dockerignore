@@ -1,0 +1,9 @@
+node_modules
+.git
+.gitignore
+.env.example
+.example.env
+.env
+dist
+logs
+tsconfig.tsbuildinfo

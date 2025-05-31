@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux"
 import { useAppDispatch, type RootStore } from '@/redux/store';
 import { Button } from "./ui/button";
-import { MoveLeft, Send } from "lucide-react";
+import { BookTextIcon, MoveLeft, Send } from "lucide-react";
 import { chatBoxToggleSlice } from "@/redux/store/chatSlice";
 import { Input } from "./ui/input";
 import Loading from "./Loading";
@@ -55,8 +55,10 @@ const ChatBox = () => {
     }
     socket.on('connection', connectionFn)
     return () => {
-      socket.disconnect()
+      // if(socketConnected) {
+        socket.disconnect()
       socket.off('connection', connectionFn)
+    // }
     }
   }, [user])
 

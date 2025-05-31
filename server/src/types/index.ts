@@ -25,3 +25,69 @@ declare module 'jsonwebtoken' {
 //     user: IUserDocument;
 //   }
 // }
+
+export type createMessageReturnType = {
+  statusCode: number
+  message: string
+  data: {
+    _id: string
+    content: string
+    chatId: {
+      _id: string
+      chatName: string
+      isGroupChat: boolean
+      users: Array<{
+        _id: string
+        username: string
+        email: string
+        picture: string
+      }>
+      groupAdmin: string
+      createdAt: string
+      updatedAt: string
+      __v: number
+      latestMessage: string
+    }
+    senderId: {
+      _id: string
+      username: string
+      email: string
+      picture: string
+      createdAt: string
+      updatedAt: string
+      __v: number
+    }
+    createdAt: string
+    updatedAt: string
+    __v: number
+  }
+}
+
+
+export type messageType =  {
+    _id: string
+    content: string
+    chatId: {
+      _id: string
+      chatName: string
+      isGroupChat: boolean
+      users: Array<string>
+      groupAdmin: string
+      createdAt: string
+      updatedAt: string
+      __v: number
+      latestMessage: string
+    }
+    senderId: {
+      _id: string
+      username: string
+      email: string
+      picture: string
+      createdAt: string
+      updatedAt: string
+      __v: number
+    }
+    createdAt: string
+    updatedAt: string
+    __v: number
+  }
