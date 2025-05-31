@@ -276,11 +276,11 @@ Ayush Kumar — Engineer, Builder, Learner
 ## 🏁 Future Improvements
 
 - Rate Limiting and Throttling
-- 
+
 - User Presence Detection
-- 
+ 
 - Horizontal Scaling with Kubernetes
-- 
+ 
 - HA Redis Setup (Redis Sentinel or Cluster)
 
 - FUTURE SCOPE NGINX with Sticky Sessions:  
